@@ -1,5 +1,5 @@
 <configuration>
-    <property name="LOG_FILE_PATH" value="D:/zhangyunlong/Code/JavaProject/week/week2/order-service/logs"/>
+    <property name="LOG_FILE_PATH" value="/var/usr/app/logs"/>
 
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>

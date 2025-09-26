@@ -1,0 +1,25 @@
+version: '3.4'
+name: week2
+
+services:
+  order-service:
+    build:
+      context: ./order-service
+      dockerfile: Dockerfile
+    ports:
+      - "8083:8081"
+    volumes:
+      - type: bind
+        source: ./order-service/logs
+        target: /var/usr/app/logs
+  
+  user-service:
+    build:
+      context: ./user-service
+      dockerfile: Dockerfile
+    ports:
+      - "8082:8082"
+    volumes:
+      - type: bind
+        source: ./user-service/logs
+        target: /var/usr/app/logs
