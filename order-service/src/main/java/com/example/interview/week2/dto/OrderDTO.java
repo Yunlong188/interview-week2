@@ -1,8 +1,10 @@
 package com.example.interview.week2.dto;
 
-import jakarta.validation.constraints.Min;
+import java.util.List;
+
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,9 +14,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class OrderDTO {
     private String id;
-    @NotBlank(message = "Product cannot be blank")
-    private String product;
-    @NotNull(message = "Quantity cannot be null")
-    @Min(value = 1, message = "Quantity must be at least 1")
-    private Integer quantity;
+    @NotBlank(message = "User ID cannot be blank")
+    private String userId;
+    @Size(min = 1, message = "Order must contain at least one item")
+    @Valid
+    private List<OrderItemDTO> items;
 }

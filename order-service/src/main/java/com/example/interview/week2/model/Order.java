@@ -1,5 +1,10 @@
 package com.example.interview.week2.model;
 
+import java.util.List;
+
+import org.hibernate.annotations.Type;
+
+import io.hypersistence.utils.hibernate.type.json.JsonType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -21,9 +26,10 @@ public class Order {
     @Column(name = "id", updatable = false, nullable = false)
     private String id;
 
-    @Column(name = "product", nullable = false)
-    private String product;
+    @Type(JsonType.class)
+    @Column(name = "items", nullable = false, columnDefinition = "json")
+    private List<OrderItem> items;
 
-    @Column(name = "quantity", nullable = false)
-    private Integer quantity;
+    @Column(name = "user_id", nullable = false)
+    private String userId;
 }

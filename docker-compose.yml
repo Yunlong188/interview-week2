@@ -1,4 +1,4 @@
-version: '3.4'
+version: "3.4"
 name: week2
 
 services:
@@ -6,19 +6,25 @@ services:
     build:
       context: ./order-service
       dockerfile: Dockerfile
+    environment:
+      - JAVA_TOOL_OPTIONS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8001
     ports:
-      - "8083:8081"
+      - 8083:8081
+      - 8001:8001
     volumes:
       - type: bind
         source: ./order-service/logs
         target: /var/usr/app/logs
-  
+
   user-service:
     build:
       context: ./user-service
       dockerfile: Dockerfile
+    environment:
+      - JAVA_TOOL_OPTIONS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8002
     ports:
-      - "8082:8082"
+      - 8082:8082
+      - 8002:8002
     volumes:
       - type: bind
         source: ./user-service/logs

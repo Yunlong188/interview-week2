@@ -16,6 +16,9 @@ import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+
 
 @RestController
 @RequestMapping("/users")
@@ -29,6 +32,13 @@ public class UserController {
         this.userService = userService;
     }
 
+    @GetMapping("/{id}")
+    public UserDTO findById(@PathVariable String id) {
+        User user = userService.findById(id);
+        RestPreconditions.checkNotFound(user);
+        return userMapper.toDto(user);
+    }
+    
     @PostMapping("/register")
     public UserDTO register(@RequestBody @Valid RegistrationDTO registrationDTO) {
         User user = userService.create(userMapper.toEntity(registrationDTO));

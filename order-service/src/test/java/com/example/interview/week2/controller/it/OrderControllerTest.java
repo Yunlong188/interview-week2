@@ -11,6 +11,10 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.test.web.client.MockRestServiceServer;
+import static org.springframework.test.web.client.match.MockRestRequestMatchers.requestTo;
+import static org.springframework.test.web.client.response.MockRestResponseCreators.withSuccess;
 
 import com.example.interview.week2.repository.OrderRepository;
 
@@ -22,16 +26,22 @@ class OrderControllerTest {
     private MockMvc mockMvc;
     @Autowired
     private OrderRepository orderRepository;
+    @Autowired
+    private RestTemplate restTemplate;
+    private MockRestServiceServer mockServer;
 
     @BeforeEach
     void setUp() throws Exception {
         orderRepository.deleteAll();
+        mockServer = MockRestServiceServer.createServer(restTemplate);
+        mockServer.expect(requestTo("http://localhost:8082/api/users/1"))
+                .andRespond(withSuccess("{\"id\":\"1\"}", MediaType.APPLICATION_JSON));
     }
 
     @Test
     void findById_whenOrderExists_thenSuccess() throws Exception {
         mockMvc.perform(post("/orders").contentType(MediaType.APPLICATION_JSON)
-                .content("{\"product\":\"Widget\",\"quantity\":5}"))
+                .content("{\"userId\":\"1\",\"items\":[{\"product\":\"Widget\",\"quantity\":5}]}"))
                 .andExpect(status().isOk())
                 .andDo(handler -> {
                     String id = handler.getResponse().getContentAsString();
@@ -51,7 +61,7 @@ class OrderControllerTest {
     void create_whenValidDto_thenSuccess() throws Exception {
         mockMvc.perform(post("/orders")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"product\":\"Widget\",\"quantity\":5}"))
+                .content("{\"userId\":\"1\",\"items\":[{\"product\":\"Widget\",\"quantity\":5}]}"))
                 .andExpect(status().isOk());
     }
 
@@ -59,7 +69,7 @@ class OrderControllerTest {
     void create_whenInvalidDto_thenBadRequest() throws Exception {
         mockMvc.perform(post("/orders")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"product\":\"\",\"quantity\":0}"))
+                .content("{\"userId\":\"1\",\"items\":[{\"product\":\"\",\"quantity\":0}]}"))
                 .andExpect(status().isBadRequest());
     }
 }

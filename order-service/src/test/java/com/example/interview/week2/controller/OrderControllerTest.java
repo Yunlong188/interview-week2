@@ -10,8 +10,11 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.example.interview.week2.controller.OrderController;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.example.interview.week2.dto.OrderDTO;
+import com.example.interview.week2.dto.OrderItemDTO;
 import com.example.interview.week2.mapper.OrderMapper;
 import com.example.interview.week2.model.Order;
 import com.example.interview.week2.service.OrderService;
@@ -74,9 +77,13 @@ class OrderControllerTest {
     @Test
     void create_validDto_callsServiceAndReturnsId() throws Exception {
         OrderDTO dto = new OrderDTO();
-        dto.setId(null);
-        dto.setProduct("test-product");
-        dto.setQuantity(2);
+        dto.setUserId("1");
+        List<OrderItemDTO> items = new ArrayList<>();
+        OrderItemDTO item = new OrderItemDTO();
+        item.setProduct("test-product");
+        item.setQuantity(2);
+        items.add(item);
+        dto.setItems(items);
 
         Order order = new Order();
         when(orderMapper.toOrder(any(OrderDTO.class))).thenReturn(order);
@@ -92,16 +99,20 @@ class OrderControllerTest {
         // verify interactions and captured arguments
         ArgumentCaptor<OrderDTO> dtoCaptor = ArgumentCaptor.forClass(OrderDTO.class);
         verify(orderMapper, times(1)).toOrder(dtoCaptor.capture());
-        assertEquals("test-product", dtoCaptor.getValue().getProduct());
+        assertEquals("test-product", dtoCaptor.getValue().getItems().get(0).getProduct());
+        assertEquals(2, dtoCaptor.getValue().getItems().get(0).getQuantity());
 
         verify(orderService, times(1)).create(any(Order.class));
     }
 
     @Test
     void create_invalidDto_returns400_andDoesNotCallService() throws Exception {
-        // missing product and invalid quantity -> should fail validation
         OrderDTO dto = new OrderDTO();
-        dto.setQuantity(0);
+        List<OrderItemDTO> items = new ArrayList<>();
+        OrderItemDTO item = new OrderItemDTO();
+        item.setQuantity(0);
+        items.add(item);
+        dto.setItems(items);
 
         mockMvc.perform(
                 post("/orders")

@@ -23,9 +23,6 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
-import com.example.interview.week2.exception.BadRequestException;
-import com.example.interview.week2.exception.ResourceNotFoundException;
-
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 
