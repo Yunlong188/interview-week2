@@ -5,7 +5,6 @@ import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -84,7 +83,7 @@ public class OrderServiceTest {
         items.add(item);
         toSave.setItems(items);
 
-        when(restTemplate.getForEntity(anyString(), eq(String.class)))
+        when(restTemplate.getForEntity(anyString(), eq(String.class), anyString()))
                 .thenReturn(ResponseEntity.ok("{\"id\":\"" + toSave.getUserId() + "\",\"username\":\"testuser\"}"));
         when(orderRepository.save(toSave)).thenReturn(sampleOrder);
 

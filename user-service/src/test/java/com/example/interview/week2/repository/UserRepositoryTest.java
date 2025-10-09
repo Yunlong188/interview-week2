@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import com.example.interview.week2.model.User;
-import com.example.interview.week2.repository.UserRepository;
 
 @DataJpaTest
 class UserRepositoryTest {

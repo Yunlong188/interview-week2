@@ -34,7 +34,7 @@ class OrderControllerTest {
     void setUp() throws Exception {
         orderRepository.deleteAll();
         mockServer = MockRestServiceServer.createServer(restTemplate);
-        mockServer.expect(requestTo("http://localhost:8082/api/users/1"))
+        mockServer.expect(requestTo("http://host.docker.internal:8082/api/users/1"))
                 .andRespond(withSuccess("{\"id\":\"1\"}", MediaType.APPLICATION_JSON));
     }
 
