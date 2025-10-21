@@ -174,3 +174,5 @@ curl -X POST http://localhost:8083/api/orders -H "Content-Type: application/json
 ```bash
 curl -X GET http://localhost:8083/api/orders/701e2774-6b89-39c9-0df2-4762a9f37c79
 ```
+
+## 搭建 GitHub Actions CI（基础）
