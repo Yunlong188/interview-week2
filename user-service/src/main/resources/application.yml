@@ -17,6 +17,10 @@ server:
     context-path: /api
   port: 8082
 
+logging:
+  file:
+    path: /var/usr/app/logs
+
 ---
 spring:
   config:
@@ -29,3 +33,7 @@ spring:
     driver-class-name: org.h2.Driver
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
+
+logging:
+  file:
+    path: ./logs

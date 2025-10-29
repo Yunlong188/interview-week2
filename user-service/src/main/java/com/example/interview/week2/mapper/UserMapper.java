@@ -6,7 +6,7 @@ import com.example.interview.week2.dto.RegistrationDTO;
 import com.example.interview.week2.dto.UserDTO;
 import com.example.interview.week2.model.User;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface UserMapper {
 
     UserDTO toDto(User user);

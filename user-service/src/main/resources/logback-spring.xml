@@ -1,5 +1,5 @@
 <configuration>
-    <property name="LOG_FILE_PATH" value="/var/usr/app/logs"/>
+    <property name="LOG_FILE_PATH" value="${LOG_FILE_PATH:-./logs}"/>
 
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>

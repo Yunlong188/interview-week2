@@ -5,7 +5,7 @@ import org.mapstruct.Mapper;
 import com.example.interview.week2.dto.OrderDTO;
 import com.example.interview.week2.model.Order;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface OrderMapper {
 
     OrderDTO toOrderDTO(Order order);
