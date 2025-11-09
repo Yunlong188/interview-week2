@@ -13,6 +13,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.test.web.client.MockRestServiceServer;
+
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.requestTo;
 import static org.springframework.test.web.client.response.MockRestResponseCreators.withSuccess;
 
@@ -34,7 +36,7 @@ class OrderControllerTest {
     void setUp() throws Exception {
         orderRepository.deleteAll();
         mockServer = MockRestServiceServer.createServer(restTemplate);
-        mockServer.expect(requestTo("http://host.docker.internal:8082/api/users/1"))
+        mockServer.expect(requestTo("http://user-service:8082/api/users/1"))
                 .andRespond(withSuccess("{\"id\":\"1\"}", MediaType.APPLICATION_JSON));
     }
 

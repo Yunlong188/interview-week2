@@ -28,7 +28,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public String create(Order order) {
         try {
-            restTemplate.getForEntity("http://host.docker.internal:8082/api/users/{id}", String.class,
+            restTemplate.getForEntity("http://user-service:8082/api/users/{id}", String.class,
                     order.getUserId());
         } catch (HttpClientErrorException.NotFound e) {
             throw new BadRequestException("User with ID " + order.getUserId() + " does not exist.");
